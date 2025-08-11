@@ -6,7 +6,7 @@ const steps = [
 ];
 
 const btn__nextStep = document.querySelector(".btn__nextStep");
-let stepActive = document.querySelector(".visible");
+let stepActive = document.querySelector(".progressive-form-visible");
 
 btn__nextStep.addEventListener("click", () => changeStep(stepActive.id));
 
@@ -16,7 +16,9 @@ function changeStep(id) {
   lastValue++;
   id = id.slice(0, -1) + lastValue;
 
-  document.querySelector(".visible").classList.toggle("visible");
+  document
+    .querySelector(".progressive-form-visible")
+    .classList.toggle("progressive-form-visible");
   stepActive = document.querySelector(`#${id}`);
-  stepActive.classList.toggle("visible");
+  stepActive.classList.toggle("progressive-form-visible");
 }
