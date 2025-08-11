@@ -37,7 +37,7 @@
 }
 
 *,
-*::hover,
+*::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
@@ -49,14 +49,69 @@
   font-weight: 400;
 }
 
-li {
+ul,
+ol {
   list-style: none;
 }
 
-.step__Container {
+body {
+  background-color: var(--blue-100);
+}
+
+.mobile__header {
+  background: url(assets/images/bg-sidebar-mobile.svg) no-repeat center center;
+  background-size: cover;
+  height: 200px;
+}
+
+.steps__container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+}
+.steps__container ul {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.progressive__form {
   display: none;
+}
+
+.step__circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--blue-100);
+  border: 1.3px solid var(--blue-100);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.step__circle.active {
+  color: var(--blue-950);
+  background-color: var(--blue-200);
+  border: none;
 }
 
 .visible {
   display: block;
+}
+
+#mobile__footer {
+  display: flex;
+  justify-content: end;
+  background-color: var(--blue-50);
+  width: 100%;
+  padding: 0.8rem 0.7rem;
+}
+
+.btn__nextStep {
+  color: var(--blue-100);
+  background-color: var(--blue-950);
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
 }

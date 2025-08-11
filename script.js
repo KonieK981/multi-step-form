@@ -5,7 +5,7 @@ const steps = [
   { id: 4, name: "Step 4", label: "Summary" },
 ];
 
-const btn__nextStep = document.querySelector("#btn__nextStep");
+const btn__nextStep = document.querySelector(".btn__nextStep");
 let stepActive = document.querySelector(".visible");
 
 btn__nextStep.addEventListener("click", () => changeStep(stepActive.id));
