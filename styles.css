@@ -53,11 +53,21 @@ ul,
 ol {
   list-style: none;
 }
+html {
+  height: 100%;
+}
 
 body {
   background-color: var(--blue-100);
   color: var(--grey-500);
+  height: 100%;
 }
+
+.main-container {
+  position: relative;
+  height: 100%;
+}
+
 h1 {
   font-weight: 700;
   font-size: 1.5rem;
@@ -82,21 +92,26 @@ h1 {
 }
 
 .progressive-form {
-  display: none;
+  display: block;
   position: relative;
   top: -85px;
   z-index: 2;
-  flex-direction: column;
   padding: 2rem 1.5rem;
   margin: 0 auto;
   width: 92%;
   max-width: 400px;
-  background-color: var(--white);
+  background-color: var(--blue-50);
   border-radius: 0.5rem;
 }
 
-.progressive-form-visible {
+.tab {
+  display: none;
+}
+
+.tab-active {
   display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .progressive-form__header p {
@@ -155,16 +170,20 @@ h1 {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  font-weight: 700;
 }
-.step__circle.active {
+
+.step__circle-active {
   color: var(--blue-950);
   background-color: var(--blue-200);
   border: none;
 }
 
-#mobile__footer {
+.mobile__footer {
+  position: absolute;
+  bottom: 0;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   background-color: var(--blue-50);
   width: 100%;
   padding: 0.8rem 0.7rem;
@@ -173,6 +192,107 @@ h1 {
 .btn__nextStep {
   color: var(--blue-100);
   background-color: var(--blue-950);
-  padding: 0.4rem 0.7rem;
+  padding: 0.6rem 0.8rem;
   border-radius: 4px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.card {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  border: 2px solid var(--purple-200);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
+.cards input {
+  display: none;
+}
+
+.card__info h3 {
+  color: var(--blue-950);
+  font-weight: 500;
+}
+
+.card__info p {
+  margin-top: 4px;
+}
+
+input[type="radio"]:checked + .card {
+  border-color: var(--blue-950);
+  background: var(--blue-100);
+}
+
+/* switch */
+.switch {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--blue-100);
+  border-radius: 10px;
+}
+
+.switch label {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.switch input {
+  display: none;
+}
+.switch label span {
+  font-weight: 500;
+}
+
+.switch__trigger {
+  width: 35px;
+  height: 18px;
+  background-color: var(--blue-950);
+  border-radius: 20px;
+  position: relative;
+  padding: 3px 4px;
+}
+
+.switch__trigger::after {
+  content: "";
+  display: block;
+  height: 12px;
+  width: 12px;
+  background-color: var(--blue-100);
+  transition: all 0.4s ease;
+  border-radius: 50%;
+}
+
+.switch input[type="checkbox"]:checked ~ .switch__trigger::after {
+  transform: translateX(14px);
+}
+
+.switch input[type="checkbox"]:not(:checked) ~ .switch__tleft {
+  color: var(--blue-950);
+}
+
+.switch input[type="checkbox"]:checked ~ .switch__tright {
+  color: var(--blue-950);
+}
+
+/* bottom buttons */
+#btn-confirm {
+  display: none;
+}
+
+.btn__back {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--grey-500);
+  font-weight: 500;
 }

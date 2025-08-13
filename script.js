@@ -6,7 +6,7 @@ const steps = [
 ];
 
 const btn__nextStep = document.querySelector(".btn__nextStep");
-let stepActive = document.querySelector(".progressive-form-visible");
+let stepActive = document.querySelector(".tab-active");
 
 btn__nextStep.addEventListener("click", () => changeStep(stepActive.id));
 
@@ -16,9 +16,13 @@ function changeStep(id) {
   lastValue++;
   id = id.slice(0, -1) + lastValue;
 
-  document
-    .querySelector(".progressive-form-visible")
-    .classList.toggle("progressive-form-visible");
+  document.querySelector(".tab-active").classList.toggle("tab-active");
   stepActive = document.querySelector(`#${id}`);
-  stepActive.classList.toggle("progressive-form-visible");
+  stepActive.classList.toggle("tab-active");
 }
+
+// document.querySelectorAll('input[name="plan"]').forEach((radio) => {
+//   radio.addEventListener("change", () => {
+//     console.log("Seleccionado:", radio.value);
+//   });
+// });
