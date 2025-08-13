@@ -217,11 +217,19 @@ h1 {
 
 .card__info h3 {
   color: var(--blue-950);
+  font-size: 16px;
   font-weight: 500;
+  text-transform: capitalize;
 }
 
 .card__info p {
   margin-top: 4px;
+  font-size: 13px;
+  letter-spacing: -1px;
+}
+
+.card__info p:nth-of-type(2) {
+  color: var(--blue-950);
 }
 
 input[type="radio"]:checked + .card {
@@ -236,6 +244,7 @@ input[type="radio"]:checked + .card {
   padding: 1rem;
   background-color: var(--blue-100);
   border-radius: 10px;
+  margin-top: 0.6rem;
 }
 
 .switch label {

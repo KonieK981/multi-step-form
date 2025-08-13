@@ -21,6 +21,62 @@ function changeStep(id) {
   stepActive.classList.toggle("tab-active");
 }
 
+//Cards render
+let isYearly = false;
+const plans = [
+  {
+    id: 1,
+    name: "arcade",
+    monthly: 9,
+    yearly: 90,
+    img: "assets/images/icon-arcade.svg",
+  },
+  {
+    id: 2,
+    name: "advanced",
+    monthly: 12,
+    yearly: 120,
+    img: "assets/images/icon-advanced.svg",
+  },
+  {
+    id: 3,
+    name: "pro",
+    monthly: 15,
+    yearly: 150,
+    img: "assets/images/icon-pro.svg",
+  },
+];
+
+const container = document.getElementById("cards");
+const toggle = document.getElementById("switch-timer");
+
+function render() {
+  container.innerHTML = "";
+
+  plans.forEach((plan) => {
+    const label = document.createElement("label");
+    label.innerHTML = `
+    <input type="radio" name="plan" value=${plan.name} />
+                <div class="card">
+                  <img src=${plan.img} alt="icon" />
+                  <div class="card__info">
+                    <h3>${plan.name}</h3>
+                    <p>$${
+                      isYearly ? plan.yearly + "/yr" : plan.monthly + "/mo"
+                    }</p>
+                    ${isYearly ? "<p>2 months free</p>" : ""}
+                  </div>
+                </div>`;
+    container.appendChild(label);
+  });
+}
+
+toggle.addEventListener("change", () => {
+  isYearly = toggle.checked;
+  render();
+});
+
+render();
 // document.querySelectorAll('input[name="plan"]').forEach((radio) => {
 //   radio.addEventListener("change", () => {
 //     console.log("Seleccionado:", radio.value);
