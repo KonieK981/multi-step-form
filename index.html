@@ -27,6 +27,7 @@
 
       <div class="progressive-form">
         <form id="multi-step-form" action="" class="form">
+          <!-- Step 1 start -->
           <div id="step1" class="tab">
             <div class="progressive-form__header">
               <h1>Personal info</h1>
@@ -83,48 +84,15 @@
               />
             </div>
           </div>
+          <!-- Step 1 end -->
           <!-- Step 2 start -->
-          <div id="step2" class="tab tab-active">
+          <div id="step2" class="tab">
             <div class="progressive-form__header">
               <h1>Select your plan</h1>
               <p>You have the option of monthly or yearly billing.</p>
             </div>
 
-            <div id="cards" class="cards">
-              <!-- <label>
-                <input type="radio" name="plan" value="arcade" />
-                <div class="card">
-                  <img src="assets/images/icon-arcade.svg" alt="icon" />
-                  <div class="card__info">
-                    <h3>Arcade</h3>
-                    <p>$9/mo</p>
-                    <p>2 months free</p>
-                  </div>
-                </div>
-              </label>
-              <label>
-                <input type="radio" name="plan" value="arcade" />
-                <div class="card">
-                  <img src="assets/images/icon-advanced.svg" alt="icon" />
-                  <div class="card__info">
-                    <h3>Advanced</h3>
-                    <p>$12/mo</p>
-                    <p>2 months free</p>
-                  </div>
-                </div>
-              </label>
-              <label>
-                <input type="radio" name="plan" value="arcade" />
-                <div class="card">
-                  <img src="assets/images/icon-pro.svg" alt="icon" />
-                  <div class="card__info">
-                    <h3>Pro</h3>
-                    <p>$15/mo</p>
-                    <p>2 months free</p>
-                  </div>
-                </div>
-              </label> -->
-            </div>
+            <div id="cards" class="cards"></div>
 
             <div class="switch">
               <label for="switch-timer">
@@ -139,11 +107,13 @@
           <!-- Step 2 end -->
 
           <!-- Step 3 start -->
-          <div id="step3" class="tab">
-            Pick add-ons Add-ons help enhance your gaming experience. Online
-            service Access to multiplayer games +$1/mo Larger storage Extra 1TB
-            of cloud save +$2/mo Customizable Profile Custom theme on your
-            profile +$2/mo Go Back Next Step
+          <div id="step3" class="tab tab-active">
+            <div class="progressive-form__header">
+              <h1>Pick add-ons</h1>
+              <p>Add-ons help enhance your gaming experience.</p>
+            </div>
+
+            <div id="addOns" class="cards"></div>
           </div>
 
           <!-- Step 3 end -->

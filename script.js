@@ -22,7 +22,7 @@ function changeStep(id) {
 }
 
 //Cards render
-let isYearly = false;
+let isYearly = true;
 const plans = [
   {
     id: 1,
@@ -50,7 +50,7 @@ const plans = [
 const container = document.getElementById("cards");
 const toggle = document.getElementById("switch-timer");
 
-function render() {
+function renderCards() {
   container.innerHTML = "";
 
   plans.forEach((plan) => {
@@ -71,12 +71,66 @@ function render() {
   });
 }
 
+//Adds render
+const addOns = [
+  {
+    id: 1,
+    name: "Online service",
+    description: "Access to multiplayer games",
+    monthly: 1,
+    yearly: 10,
+  },
+  {
+    id: 2,
+    name: "Larger storage",
+    description: "Extra 1TB of cloud save",
+    monthly: 2,
+    yearly: 20,
+  },
+  {
+    id: 3,
+    name: "Customizable profile",
+    description: "Custom theme on your profile",
+    monthly: 2,
+    yearly: 20,
+  },
+];
+
+const containerAddOns = document.getElementById("addOns");
+
+function renderAdds() {
+  containerAddOns.innerHTML = "";
+
+  addOns.forEach((add) => {
+    const label = document.createElement("label");
+    label.innerHTML = `
+                <div class="card">
+                  <div class="form-group">
+                    <input type="checkbox" id="html" class="form-group__input"/>
+                    <label class="checkbox form-group__label" for="html"></label>
+                  </div>
+                  <div class="card__info">
+                    <div>
+                      <h3>${add.name}</h3>
+                      <p>${add.description}</p>
+                    </div>
+                    <p>+$${
+                      isYearly ? add.yearly + "/yr" : add.monthly + "/mo"
+                    }</p>
+                  </div>
+                </div>`;
+    containerAddOns.appendChild(label);
+  });
+}
+
 toggle.addEventListener("change", () => {
   isYearly = toggle.checked;
-  render();
+  renderCards();
+  renderAdds();
 });
 
-render();
+renderCards();
+renderAdds();
 // document.querySelectorAll('input[name="plan"]').forEach((radio) => {
 //   radio.addEventListener("change", () => {
 //     console.log("Seleccionado:", radio.value);
