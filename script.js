@@ -5,24 +5,6 @@ const steps = [
   { id: 4, name: "Step 4", label: "Summary" },
 ];
 
-const btn__nextStep = document.querySelector(".btn__nextStep");
-let stepActive = document.querySelector(".tab-active");
-
-btn__nextStep.addEventListener("click", () => changeStep(stepActive.id));
-
-function changeStep(id) {
-  let length = id.length - 1;
-  let lastValue = Number(id[length]);
-  lastValue++;
-  id = id.slice(0, -1) + lastValue;
-
-  document.querySelector(".tab-active").classList.toggle("tab-active");
-  stepActive = document.querySelector(`#${id}`);
-  stepActive.classList.toggle("tab-active");
-}
-
-//Cards render
-let isYearly = true;
 const plans = [
   {
     id: 1,
@@ -47,31 +29,6 @@ const plans = [
   },
 ];
 
-const container = document.getElementById("cards");
-const toggle = document.getElementById("switch-timer");
-
-function renderCards() {
-  container.innerHTML = "";
-
-  plans.forEach((plan) => {
-    const label = document.createElement("label");
-    label.innerHTML = `
-    <input type="radio" name="plan" value=${plan.name} />
-                <div class="card">
-                  <img src=${plan.img} alt="icon" />
-                  <div class="card__info">
-                    <h3>${plan.name}</h3>
-                    <p>$${
-                      isYearly ? plan.yearly + "/yr" : plan.monthly + "/mo"
-                    }</p>
-                    ${isYearly ? "<p>2 months free</p>" : ""}
-                  </div>
-                </div>`;
-    container.appendChild(label);
-  });
-}
-
-//Adds render
 const addOns = [
   {
     id: 1,
@@ -96,6 +53,75 @@ const addOns = [
   },
 ];
 
+let isYearly = false;
+let currentStep = 0;
+
+const stepsCircles = document.querySelectorAll("#stepper .step__circle");
+const tabs = document.querySelectorAll("#multi-step-form .tab");
+const btn__nextStep = document.querySelector(".btn__nextStep");
+const btn__back = document.querySelector(".btn__back");
+let stepActive = document.querySelector(".tab-active");
+
+btn__nextStep.addEventListener("click", () => nextStep());
+btn__back.addEventListener("click", () => prevStep());
+
+function setStep(index) {
+  stepsCircles.forEach((step) => step.classList.remove("step__circle-active"));
+  tabs.forEach((tab) => tab.classList.remove("tab-active"));
+
+  if (stepsCircles[index] && tabs[index]) {
+    stepsCircles[index].classList.add("step__circle-active");
+    tabs[index].classList.add("tab-active");
+    currentStep = index;
+  }
+  if (currentStep === 3) {
+    getAllValues();
+  }
+  if (currentStep === 4) {
+    document.getElementById("mobile__footer").classList.add("remove");
+  }
+}
+
+function nextStep() {
+  if (currentStep < stepsCircles.length - 1) {
+    setStep(currentStep + 1);
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    setStep(currentStep - 1);
+  }
+}
+
+//step 2
+
+const container = document.getElementById("cards");
+const toggle = document.getElementById("switch-timer");
+
+function renderCards() {
+  container.innerHTML = "";
+
+  plans.forEach((plan) => {
+    const label = document.createElement("label");
+    label.innerHTML = `
+    <input type="radio" name="plan" value=${plan.id} />
+                <div class="card">
+                  <img src=${plan.img} alt="icon" />
+                  <div class="card__info">
+                    <h3>${plan.name}</h3>
+                    <p>$${
+                      isYearly ? plan.yearly + "/yr" : plan.monthly + "/mo"
+                    }</p>
+                    ${isYearly ? "<p>2 months free</p>" : ""}
+                  </div>
+                </div>`;
+    container.appendChild(label);
+  });
+}
+
+//step 3
+
 const containerAddOns = document.getElementById("addOns");
 
 function renderAdds() {
@@ -106,7 +132,9 @@ function renderAdds() {
     label.innerHTML = `
                 <div class="card">
                   <div class="form-group">
-                    <input type="checkbox" id="html" class="form-group__input"/>
+                    <input type="checkbox" name="adds" value=${
+                      add.id
+                    } class="form-group__input"/>
                     <label class="checkbox form-group__label" for="html"></label>
                   </div>
                   <div class="card__info">
@@ -123,6 +151,49 @@ function renderAdds() {
   });
 }
 
+const containerConfirmation = document.getElementById("confirmation");
+
+function renderConfirmation(values) {
+  let total = 0;
+  const list = values.adds
+    .map((el) => {
+      const obj = addOns.find((add) => add.id == el);
+      total += isYearly ? obj.yearly : obj.monthly;
+      return ` <li>
+                    <p>${obj.name}</p>
+                    <span>+$${isYearly ? obj.yearly : obj.monthly}/${
+        isYearly ? "yr" : "mo"
+      }</span>
+                  </li>
+    `;
+    })
+    .join("");
+
+  containerConfirmation.innerHTML = "";
+  const plan = plans.find((el) => el.id == values.plan);
+  total += isYearly ? plan.yearly : plan.monthly;
+
+  const divEl = document.createElement("div");
+  divEl.innerHTML = `
+              <div class="confirmation">
+                <div class="confirmation_header">
+                  <div>
+                    <p>${plan.name} (Monthly)</p>
+                    <a href="">Change</a>
+                  </div>
+                  <span>$${isYearly ? plan.yearly : plan.monthly}/mo</span>
+                </div>
+                <ul class="confirmation_info">
+                 ${list}      
+                </ul>
+              </div>
+              <div class="confirmation__total">
+                <p>Total(${isYearly ? "per year" : "per month"})</p>
+                <span>+$${total}/${isYearly ? "yr" : "mo"}</span>
+              </div>`;
+  containerConfirmation.appendChild(divEl);
+}
+
 toggle.addEventListener("change", () => {
   isYearly = toggle.checked;
   renderCards();
@@ -131,8 +202,26 @@ toggle.addEventListener("change", () => {
 
 renderCards();
 renderAdds();
+
 // document.querySelectorAll('input[name="plan"]').forEach((radio) => {
 //   radio.addEventListener("change", () => {
-//     console.log("Seleccionado:", radio.value);
+//     // console.log("Seleccionado:", radio.value);
+//     state.plan = radio.value;
 //   });
 // });
+
+function getAllValues() {
+  const inputs = document.querySelectorAll("input, select");
+  const values = {};
+  inputs.forEach((input) => {
+    if (input.type === "radio") {
+      if (input.checked) values[input.name] = input.value;
+    } else if (input.type === "checkbox") {
+      if (!values[input.name]) values[input.name] = [];
+      if (input.checked) values[input.name].push(input.value);
+    } else {
+      values[input.name] = input.value;
+    }
+  });
+  renderConfirmation(values);
+}

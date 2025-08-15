@@ -16,11 +16,12 @@
     <div class="main-container">
       <header id="mobile__header" class="mobile__header">
         <div class="steps__container">
-          <ul>
+          <ul id="stepper">
             <li><span class="step__circle step__circle-active">1</span></li>
             <li><span class="step__circle">2</span></li>
             <li><span class="step__circle">3</span></li>
             <li><span class="step__circle">4</span></li>
+            <li><span class="step__circle">5</span></li>
           </ul>
         </div>
       </header>
@@ -28,7 +29,7 @@
       <div class="progressive-form">
         <form id="multi-step-form" action="" class="form">
           <!-- Step 1 start -->
-          <div id="step1" class="tab">
+          <div id="step1" class="tab tab-active">
             <div class="progressive-form__header">
               <h1>Personal info</h1>
               <p>Please provide your name, email address, and phone number.</p>
@@ -107,7 +108,7 @@
           <!-- Step 2 end -->
 
           <!-- Step 3 start -->
-          <div id="step3" class="tab tab-active">
+          <div id="step3" class="tab">
             <div class="progressive-form__header">
               <h1>Pick add-ons</h1>
               <p>Add-ons help enhance your gaming experience.</p>
@@ -120,20 +121,26 @@
 
           <!-- Step 4 start -->
           <div id="step4" class="tab">
-            Finishing up Double-check everything looks OK before confirming.
+            <div class="progressive-form__header">
+              <h1>Finishing up</h1>
+              <p>Double-check everything looks OK before confirming.</p>
+            </div>
+            <div id="confirmation"></div>
           </div>
-
-          <!-- Dynamically add subscription and add-on selections here -->
-
-          <!-- Total (per month/year) Go Back Confirm -->
 
           <!-- Step 4 end -->
 
           <!-- Step 5 start -->
-          <div id="step5" class="tab">
-            Thank you! Thanks for confirming your subscription! We hope you have
-            fun using our platform. If you ever need support, please feel free
-            to email us at support@loremgaming.com.
+          <div id="step5" class="tab step5">
+            <img src="assets/images/icon-thank-you.svg" alt="Completed" />
+            <div class="progressive-form__header">
+              <h1>Thank you!</h1>
+            </div>
+            <p>
+              Thanks for confirming your subscription! We hope you have fun
+              using our platform. If you ever need support, please feel free to
+              email us at support@loremgaming.com.
+            </p>
           </div>
 
           <!-- Step 5 end -->
@@ -141,8 +148,8 @@
       </div>
 
       <footer id="mobile__footer" class="mobile__footer">
-        <button class="btn__back">Go Back</button>
-        <button class="btn__nextStep">Next Step</button>
+        <button id="btn__back" class="btn__back">Go Back</button>
+        <button id="btn__nextStep" class="btn__nextStep">Next Step</button>
         <button id="btn-confirm" type="submit" form="multi-step-form">
           Confirm
         </button>
