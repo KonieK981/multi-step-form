@@ -55,67 +55,53 @@ const addOns = [
 
 let isYearly = false;
 let currentStep = 0;
-const totalSteps = 5;
+const totalSteps = 4;
 
 const stepsCircles = document.querySelectorAll(".stepper .step__circle");
 const stepper__sidebar = document.querySelectorAll(
   "#stepper__sidebar .step__circle"
 );
 const tabs = document.querySelectorAll("#multi-step-form .tab");
-const btn__nextStep = document.querySelector(".btn__nextStep");
-const btn__back = document.querySelector(".btn__back");
+const btn__nextStep = document.querySelectorAll(".btn__nextStep");
+const btn__back = document.querySelectorAll(".btn__back");
 let stepActive = document.querySelector(".tab-active");
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const phoneInput = document.getElementById("phone");
 
-btn__nextStep.addEventListener("click", () => nextStep());
-btn__back.addEventListener("click", () => prevStep());
+btn__nextStep.forEach((el) => el.addEventListener("click", () => nextStep()));
+btn__back.forEach((el) => el.addEventListener("click", () => prevStep()));
 
 function setStep(index) {
-  if (currentStep === 0) {
-    btn__back.classList.add("hidden");
-    if (isErrorFirstStepValidation()) return;
-    else {
-      document
-        .querySelectorAll(".error__text")
-        .forEach((el) => el.classList.remove("visible"));
-    }
-  }
+  //check form inputs
+  if (isErrorFirstStepValidation()) return;
 
-  stepsCircles.forEach((step) => step.classList.remove("step__circle-active"));
+  //update status of step indicator and tabs
+  if (index < 4) stepperUpdater(index);
+
   tabs.forEach((tab) => tab.classList.remove("tab-active"));
 
-  if (stepsCircles[index] && currentStep < totalSteps) {
-    stepsCircles[index].classList.add("step__circle-active");
-    stepper__sidebar[index].classList.add("step__circle-active");
-    currentStep = index;
-  }
-
-  if (currentStep > 0) {
-    btn__back.classList.remove("hidden");
-  }
-
-  if (currentStep === 0 || currentStep >= 4) {
-    btn__back.classList.add("hidden");
+  if (index > 0 && index <= 4) {
+    btn__back.forEach((el) => el.classList.remove("hidden"));
+  } else {
+    btn__back.forEach((el) => el.classList.add("hidden"));
   }
 
   if (tabs[index]) {
     tabs[index].classList.add("tab-active");
   }
 
-  if (currentStep === 3) {
-    getAllValues();
-  }
+  getAllValues();
 
-  if (currentStep === 4) {
+  if (index === 4) {
     document.getElementById("mobile__footer").classList.add("remove");
     document.querySelector(".form__btns").classList.add("remove");
   }
+  currentStep = index;
 }
 
 function nextStep() {
-  if (currentStep < 5) {
+  if (currentStep < totalSteps) {
     setStep(currentStep + 1);
   }
 }
@@ -267,6 +253,23 @@ function isErrorFirstStepValidation() {
       document.getElementById("phoneError").classList.add("visible");
     return true;
   }
+  document
+    .querySelectorAll(".error__text")
+    .forEach((el) => el.classList.remove("visible"));
 
   return false;
+}
+
+function stepperUpdater(index) {
+  if (index < totalSteps) {
+    stepsCircles.forEach((step) =>
+      step.classList.remove("step__circle-active")
+    );
+    tabs.forEach((tab) => tab.classList.remove("tab-active"));
+  }
+
+  if (stepsCircles[index]) {
+    stepsCircles[index].classList.add("step__circle-active");
+    stepper__sidebar[index].classList.add("step__circle-active");
+  }
 }

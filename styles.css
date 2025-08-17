@@ -299,6 +299,7 @@ input[type="radio"]:checked + .card {
   border-radius: 20px;
   position: relative;
   padding: 3px 4px;
+  cursor: pointer;
 }
 
 .switch__trigger::after {
@@ -517,6 +518,7 @@ input[type="radio"]:checked + .card {
   .progressive-form {
     display: flex;
     gap: 5rem;
+    top: auto;
     justify-content: center;
     max-width: 900px;
   }
@@ -575,6 +577,7 @@ input[type="radio"]:checked + .card {
 
   .form {
     margin-top: 2rem;
+    min-width: 440px;
   }
 
   .form__btns {
