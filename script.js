@@ -55,35 +55,67 @@ const addOns = [
 
 let isYearly = false;
 let currentStep = 0;
+const totalSteps = 5;
 
-const stepsCircles = document.querySelectorAll("#stepper .step__circle");
+const stepsCircles = document.querySelectorAll(".stepper .step__circle");
+const stepper__sidebar = document.querySelectorAll(
+  "#stepper__sidebar .step__circle"
+);
 const tabs = document.querySelectorAll("#multi-step-form .tab");
 const btn__nextStep = document.querySelector(".btn__nextStep");
 const btn__back = document.querySelector(".btn__back");
 let stepActive = document.querySelector(".tab-active");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
 
 btn__nextStep.addEventListener("click", () => nextStep());
 btn__back.addEventListener("click", () => prevStep());
 
 function setStep(index) {
+  if (currentStep === 0) {
+    btn__back.classList.add("hidden");
+    if (isErrorFirstStepValidation()) return;
+    else {
+      document
+        .querySelectorAll(".error__text")
+        .forEach((el) => el.classList.remove("visible"));
+    }
+  }
+
   stepsCircles.forEach((step) => step.classList.remove("step__circle-active"));
   tabs.forEach((tab) => tab.classList.remove("tab-active"));
 
-  if (stepsCircles[index] && tabs[index]) {
+  if (stepsCircles[index] && currentStep < totalSteps) {
     stepsCircles[index].classList.add("step__circle-active");
-    tabs[index].classList.add("tab-active");
+    stepper__sidebar[index].classList.add("step__circle-active");
     currentStep = index;
   }
+
+  if (currentStep > 0) {
+    btn__back.classList.remove("hidden");
+  }
+
+  if (currentStep === 0 || currentStep >= 4) {
+    btn__back.classList.add("hidden");
+  }
+
+  if (tabs[index]) {
+    tabs[index].classList.add("tab-active");
+  }
+
   if (currentStep === 3) {
     getAllValues();
   }
+
   if (currentStep === 4) {
     document.getElementById("mobile__footer").classList.add("remove");
+    document.querySelector(".form__btns").classList.add("remove");
   }
 }
 
 function nextStep() {
-  if (currentStep < stepsCircles.length - 1) {
+  if (currentStep < 5) {
     setStep(currentStep + 1);
   }
 }
@@ -105,7 +137,9 @@ function renderCards() {
   plans.forEach((plan) => {
     const label = document.createElement("label");
     label.innerHTML = `
-    <input type="radio" name="plan" value=${plan.id} />
+    <input type="radio" name="plan" value=${plan.id} ${
+      plan.id === 1 ? "checked" : ""
+    }/>
                 <div class="card">
                   <img src=${plan.img} alt="icon" />
                   <div class="card__info">
@@ -202,14 +236,7 @@ toggle.addEventListener("change", () => {
 
 renderCards();
 renderAdds();
-
-// document.querySelectorAll('input[name="plan"]').forEach((radio) => {
-//   radio.addEventListener("change", () => {
-//     // console.log("Seleccionado:", radio.value);
-//     state.plan = radio.value;
-//   });
-// });
-
+//step4
 function getAllValues() {
   const inputs = document.querySelectorAll("input, select");
   const values = {};
@@ -224,4 +251,22 @@ function getAllValues() {
     }
   });
   renderConfirmation(values);
+}
+
+function isErrorFirstStepValidation() {
+  if (
+    nameInput.validity.valueMissing ||
+    emailInput.validity.valueMissing ||
+    phoneInput.validity.valueMissing
+  ) {
+    if (nameInput.validity.valueMissing)
+      document.getElementById("nameError").classList.add("visible");
+    if (emailInput.validity.valueMissing)
+      document.getElementById("emailError").classList.add("visible");
+    if (phoneInput.validity.valueMissing)
+      document.getElementById("phoneError").classList.add("visible");
+    return true;
+  }
+
+  return false;
 }
