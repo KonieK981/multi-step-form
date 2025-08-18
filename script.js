@@ -152,10 +152,14 @@ function renderAdds() {
     label.innerHTML = `
                 <div class="card">
                   <div class="form-group">
-                    <input type="checkbox" name="adds" value=${
-                      add.id
-                    } class="form-group__input"/>
-                    <label class="checkbox form-group__label" for="html"></label>
+                    <input id=${
+                      "adds-" + add.id
+                    } type="checkbox" name="adds" value=${
+      add.id
+    } class="form-group__input"/>
+                    <label class="checkbox form-group__label" for=${
+                      "adds-" + add.id
+                    }></label>
                   </div>
                   <div class="card__info">
                     <div>
@@ -240,22 +244,36 @@ function getAllValues() {
 }
 
 function isErrorFirstStepValidation() {
-  if (
-    nameInput.validity.valueMissing ||
-    emailInput.validity.valueMissing ||
-    phoneInput.validity.valueMissing
-  ) {
-    if (nameInput.validity.valueMissing)
-      document.getElementById("nameError").classList.add("visible");
-    if (emailInput.validity.valueMissing)
-      document.getElementById("emailError").classList.add("visible");
-    if (phoneInput.validity.valueMissing)
-      document.getElementById("phoneError").classList.add("visible");
-    return true;
-  }
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const phoneError = document.getElementById("phoneError");
   document
     .querySelectorAll(".error__text")
     .forEach((el) => el.classList.remove("visible"));
+  if (
+    nameInput.validity.valueMissing ||
+    emailInput.validity.valueMissing ||
+    emailInput.validity.typeMismatch ||
+    phoneInput.validity.valueMissing
+  ) {
+    if (nameInput.validity.valueMissing) {
+      document.getElementById("nameError").classList.add("visible");
+      nameError.textContent = "Name required";
+    }
+    if (emailInput.validity.valueMissing) {
+      document.getElementById("emailError").classList.add("visible");
+      emailError.textContent = "Email required";
+    }
+    if (emailInput.validity.typeMismatch) {
+      document.getElementById("emailError").classList.add("visible");
+      emailError.textContent = "Bad format";
+    }
+    if (phoneInput.validity.valueMissing) {
+      document.getElementById("phoneError").classList.add("visible");
+      phoneError.textContent = "Phone required";
+    }
+    return true;
+  }
 
   return false;
 }

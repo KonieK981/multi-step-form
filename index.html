@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learning project: multistep form using only HTML, CSS, and JavaScript, featuring custom validation and clean UI."
+    />
     <link
       rel="icon"
       type="image/png"
@@ -72,9 +76,7 @@
             <div class="form__group">
               <div class="form__label-wrapper">
                 <label for="name">Name</label>
-                <span id="nameError" class="error__text" role="alert">
-                  Name is required.</span
-                >
+                <span id="nameError" class="error__text" role="alert"> </span>
               </div>
               <input
                 type="text"
@@ -91,12 +93,10 @@
             <div class="form__group">
               <div class="form__label-wrapper">
                 <label for="email">Email Address</label>
-                <span id="emailError" class="error__text" role="alert">
-                  Email is required.</span
-                >
+                <span id="emailError" class="error__text" role="alert"> </span>
               </div>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 class="form__control"
@@ -110,9 +110,7 @@
             <div class="form__group">
               <div class="form__label-wrapper">
                 <label for="phone">Phone Number</label>
-                <span id="phoneError" class="error__text" role="alert">
-                  Phone number is required.</span
-                >
+                <span id="phoneError" class="error__text" role="alert"> </span>
               </div>
               <input
                 type="text"
